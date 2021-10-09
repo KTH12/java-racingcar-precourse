@@ -1,6 +1,7 @@
 package racinggame.model;
 
-import java.security.InvalidParameterException;
+import racinggame.common.exception.InvalidParamException;
+import racinggame.common.response.ErrorCode;
 
 public class CarName {
     public static final int MAX_NAME_LENGTH = 5;
@@ -17,7 +18,7 @@ public class CarName {
 
     private void valid(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
-            throw new InvalidParameterException(String.format("이름은 %s자 이하로 설정할 수 있습니다.", MAX_NAME_LENGTH));
+            throw new InvalidParamException(ErrorCode.CAR_NAME_SIZE_OVER);
         }
     }
 }
