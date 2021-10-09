@@ -71,10 +71,10 @@
     - [X] 자동차 생성 테스트
     - [X] 자동차 4이상 전진 , 3이하 정지 기능
 
-- [ ] 커스텀 예외처리 적용
-    - [ ] BaseException 추가
-    - [ ] InvalidParamException 추가
-    - [ ] InvalidParamExceptionTest 적용
+- [X] 커스텀 예외처리 적용
+    - [X] BaseException 추가
+    - [X] InvalidParamException 추가
+    - [X] InvalidParamExceptionTest 적용
 
 - [X] Enum 처리
     - [X] 에러 메시지 Enum 추가
