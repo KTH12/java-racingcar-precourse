@@ -1,5 +1,7 @@
 package racinggame.model;
 
+import racinggame.common.response.CommonMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class RacingResults {
             mapLognestDistance(racingResults.get(i));
         }
 
-        return String.join(",", winners);
+        return String.join(CommonMessage.COMMA_SEPARATE.getMessage(), winners);
     }
 
     private void mapLognestDistance(RacingResult racingResult) {

@@ -51,7 +51,7 @@ public class RacingGameServiceImpl implements RacingGameService {
         try {
             UserOutput.print(CommonMessage.REQUIRE_CAR_NAMES.getMessage());
             List<String> carNames = UserInput.readUserMessageToArray();
-            UserOutput.print(String.join(",", carNames));
+            UserOutput.print(String.join(CommonMessage.COMMA_SEPARATE.getMessage(), carNames));
             return carNames;
         } catch (InvalidParamException e) {
             UserOutput.print(e.getMessage());
