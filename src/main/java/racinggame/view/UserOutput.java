@@ -2,6 +2,8 @@ package racinggame.view;
 
 import racinggame.common.response.CommonMessage;
 
+import java.util.List;
+
 public class UserOutput {
 
     public static void print(String input) {

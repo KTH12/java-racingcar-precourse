@@ -19,4 +19,20 @@ public class Cars {
             cars.add(new Car(name));
         }
     }
+
+    public RacingResults racing() {
+        RacingResults racingResults = new RacingResults();
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            RacingResult racingResult = play(car);
+            racingResults.add(racingResult);
+        }
+
+        return racingResults;
+    }
+
+    private RacingResult play(Car car) {
+        car.movingFront(RandomNumber.generator());
+        return new RacingResult(car);
+    }
 }
