@@ -59,8 +59,8 @@ class RacingResultsTest extends NSTest {
 
     private void racingResultTest(Cars cars) {
         RacingResults racingResults = cars.racing();
-        String results = racingResults.reports();
-        UserOutput.print(results);
+        List<String> results = racingResults.reports();
+        UserOutput.listLoopPrint(results);
         UserOutput.printWinner(racingResults.winnerReport());
     }
 

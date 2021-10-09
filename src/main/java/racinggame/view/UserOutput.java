@@ -8,6 +8,12 @@ public class UserOutput {
         System.out.println(input);
     }
 
+    public static void listLoopPrint(List<String> listOutput) {
+        for (String output : listOutput) {
+            print(output);
+        }
+    }
+
     public static void printTtyCount() {
         System.out.println(CommonMessage.REQUIRE_TRY_COUNT.getMessage());
     }

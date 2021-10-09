@@ -12,7 +12,7 @@ public class RacingResults {
         racingResults.add(racingResult);
     }
 
-    public String reports() {
+    public List<String> reports() {
         List<String> results = new ArrayList<>();
         for (int i = 0; i < racingResults.size(); i++) {
             RacingResult racingResult = racingResults.get(i);
@@ -20,7 +20,7 @@ public class RacingResults {
 
         }
 
-        return String.join(",", results);
+        return results;
     }
 
     public String winnerReport() {
