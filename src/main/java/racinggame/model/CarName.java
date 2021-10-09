@@ -3,7 +3,7 @@ package racinggame.model;
 import java.security.InvalidParameterException;
 
 public class CarName {
-    private static final int MAX_NAME_LENGTH = 5;
+    public static final int MAX_NAME_LENGTH = 5;
     private final String name;
 
     public CarName(String name) {
