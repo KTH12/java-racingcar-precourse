@@ -1,9 +1,8 @@
 package racinggame;
 
 import org.junit.jupiter.api.Test;
+import racinggame.common.exception.InvalidParamException;
 import racinggame.model.Car;
-
-import java.security.InvalidParameterException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -37,7 +36,7 @@ public class CarTest {
 
     @Test
     void Car_이름_사이즈_오류() {
-        assertThatExceptionOfType(InvalidParameterException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
             new Car(failCarName);
         });
     }
