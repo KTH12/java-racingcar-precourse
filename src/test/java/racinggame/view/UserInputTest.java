@@ -1,45 +1,42 @@
-package racinggame;
+package racinggame.view;
 
 import nextstep.test.NSTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import racinggame.common.exception.InvalidParamException;
 import racinggame.common.response.ErrorCode;
-import racinggame.model.Car;
 import racinggame.model.Cars;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class CarsTest extends NSTest {
+public class UserInputTest extends NSTest {
+    @BeforeEach
+    void beforeEach() {
+        setUp();
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"OrverAcar,Bcar,Ccar"})
-    void Cars_6자_실패(String inputCarNames) {
+    void 콤마_입력_자동차_생성_6자_실패(String input) {
         assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
-            List<String> carNames = getNameList(inputCarNames);
+            run(input);
+            List<String> carNames = UserInput.readUserMessageToArray();
 
             new Cars(carNames);
         }).withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
+
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Acar,Bcar,Ccar"})
-    void 여러대_자동차_생성(String inputCarNames) {
-        List<String> carNames = getNameList(inputCarNames);
+    void 콤마_입력_자동차_생성(String input) {
+        run(input);
+        List<String> carNames = UserInput.readUserMessageToArray();
 
-        Cars cars = new Cars(carNames);
-        List<Car> carList = cars.getCars();
-        for (int i = 0; i < carList.size(); i++) {
-            assertThat(carList.get(i).getCarName()).isEqualTo(carNames.get(i));
-        }
-    }
-
-    private List<String> getNameList(String inputCarNames) {
-        return Arrays.asList(inputCarNames.split(","));
+        new Cars(carNames);
     }
 
     @Override protected void runMain() {

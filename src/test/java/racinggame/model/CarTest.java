@@ -1,8 +1,7 @@
-package racinggame;
+package racinggame.model;
 
 import org.junit.jupiter.api.Test;
 import racinggame.common.exception.InvalidParamException;
-import racinggame.model.Car;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
