@@ -80,33 +80,33 @@
     - [X] 에러 메시지 Enum 추가
     - [X] 일반 메시지 Enum 추가
 
-- [ ] 여러대 자동차 구현
+- [X] 여러대 자동차 구현
     - [X] Cars 생성
     - [X] 자동차 이름 목록을 입력 받고 Cars 생성
     - [X] Cars 이름예외 실패 테스트
 
-- [ ] 랜덤 숫자 모델 구현
+- [X] 랜덤 숫자 모델 구현
     - [X] 랜덤 숫자 생성 모델을 통해 0~9 사이 숫자 생성 테스트
 
-- [ ] 유저입력 프로세스 구현
+- [X] 유저입력 프로세스 구현
     - [X] ","로 구분된 자동차 이름을 받아, List 문자열로 변환 기능
     - [X] 입력받은 "," 문자열로 여러대 자동차 생성
 
-- [ ] 재시도 모델 구현
+- [X] 재시도 모델 구현
     - [X] 시도 횟수 증가 기능
     - [X] 레이싱 게임 시도 횟수 도달 체크 기능(레이싱 게임 종료 여부)
     - [X] 시도횟수(숫자) 입력 받기 테스트
     - [X] 시도횟수 문자 입력 실패 테스트
     - [X] 레이싱 게임 시도 횟수 도달 체크 테스트
 
-- [ ] 레이실 결과 모델 구현
+- [X] 레이실 결과 모델 구현
     - [X] 자동차 이동 거리 출력 기능
     - [X] 자동차 이름과 이동거리 출력 테스트
     - [X] 여러 자동차 이름과 이동거리 출력 테스트
     - [X] 최종 우승자 출력 테스트
     - [X] 최종 다중 우승자 출력 테스트
 
-- [ ] 여러대 자동차 레이싱 구현
+- [X] 여러대 자동차 레이싱 구현
     - [X] 각각 자동차들 랜덤(0~9) 숫자에 의해 전진 혹은 정지 실행 기능
     - [X] 레이싱 후 우승자 검출 기능
     - [X] 다중 우승자 기능
@@ -128,9 +128,7 @@
     - model 패키지에서 View 에 접근하는 로직이 있으면 복잡성을 높일 수 있으므로 분리
     - RacingGameServiceImpl.java 를 infrastructure 패키지로 이동
 
---- 
-
-### 테스트 코드 리팩토링
+## 테스트 코드 리팩토링
 
 > 목표 : 깨끗한 테스트 코드 만들기
 > 1. 가독성을 높이자
@@ -141,8 +139,69 @@
 > 6. given-when-then
 >
 
-- [ ] 테스트 코드 리팩토링
+- [X] 테스트 코드 리팩토링
     - [X] 가동성 높이기 위해 함수 분리
     - [X] 중복 변수 상수로 리팩토링
     - [X] given-when-then 패턴 적용
-  
+
+---  
+
+# 프로젝트 구조
+
+    ├── ...
+    ├── racinggame
+    │   ├── exception                     # 커스텀 예외 패키지  
+    │   │   ├── exception       
+    │   │   │   ├── BaseException         
+    │   │   │   └── InvalidParamException # 입력 오류 Exception
+    │   │   │
+    │   │   └── response
+    │   │       ├── CommonMessage         # 공통 Enum 메시지
+    │   │       └── ErrorCode             # 에러 Enum
+    │   │
+    │   ├── controller                    
+    │   │   └── GameController            # 레이싱 게임 호출
+    │   │
+    │   ├── infrastructure                
+    │   │   └── RacingGameServiceImpl     # RacingGameService 구현체
+    │   │
+    │   ├── model         
+    │   │   ├── Car                       # CarName,Engin, 이동거리를 가짐
+    │   │   ├── CarName                   # 5자 이하의 이름을 가짐
+    │   │   ├── Cars                      # Car 리스트를 가짐
+    │   │   ├── Engine                    # Car 출력(전진) 모델
+    │   │   ├── RacingGameService         # 레이싱 게임 진행 인터페이스
+    │   │   ├── RacingResult              # 각각 자동차 결과 모델
+    │   │   ├── RacingResults             # 레이싱 전체 결과 모델
+    │   │   ├── RandomNumber              # 랜덤 숫자 생성 모델
+    │   │   └── TryCount                  # 재시도 카운팅, 마지막 게임 여부 판단 모델
+    │   │
+    │   ├── view      
+    │   │   ├── UserInput                 # 유저 입력을 받는 view
+    │   │   └── UserOutput                # 출력 담당 view
+    │   │
+    │   ├── Application.java              # main 
+    └── ...
+
+# 프로젝트 컨벤션
+
+> - git commit 컨벤션 [링크](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) 내용을 지키며 커밋
+> - 코드 컨벤션 은 [링크](https://naver.github.io/hackday-conventions-java/) "캠퍼스 핵데이 Java 코딩 컨벤션"으로 진행
+> - Test 클래스 이름은 ("테스트 대상 클래스명 +TEST")로 명명합니다. (ex. SpringTest)
+> - 이름을 통해 의도를 드러내라.
+> - 축약하지 마라.
+> - space(공백)도 convention 이다.
+> - 불필요하게 공백 라인을 만들지 않는다.
+> - 구현 순서도 convention 이다.
+> - space 와 tab 을 혼용하지 않는다.
+> - 의미없는 주석을 달지 않는다.
+> - 값을 하드코딩하지 마라.
+> - git commit 메시지를 의미있게 작성.
+
+# 참고 자료
+
+- [Introduction to AssertJ](https://www.baeldung.com/introduction-to-assertj)
+- [일급 콜렉션](https://developerfarm.wordpress.com/2012/02/01/object_calisthenics_/)
+- [원시값과 문자열 포장](https://developerfarm.wordpress.com/2012/01/27/object_calisthenics_4/)
+
+---
