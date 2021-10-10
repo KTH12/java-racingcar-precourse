@@ -22,21 +22,30 @@ public class UserInputTest extends NSTest {
     @ValueSource(strings = {"OrverAcar,Bcar,Ccar"})
     void 콤마_입력_자동차_생성_6자_실패(String input) {
         assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
+            // given
             run(input);
-            List<String> carNames = UserInput.readUserMessageToArray();
 
+            // then
+            List<String> carNames = UserInput.readUserMessageToArray();
             new Cars(carNames);
-        }).withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
+
+        })  // then
+            .withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
 
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Acar,Bcar,Ccar"})
     void 콤마_입력_자동차_생성(String input) {
+        // given
         run(input);
-        List<String> carNames = UserInput.readUserMessageToArray();
 
+        // when
+        List<String> carNames = UserInput.readUserMessageToArray();
         new Cars(carNames);
+
+        // then
+        // 정상 종료 성공
     }
 
     @Override protected void runMain() {

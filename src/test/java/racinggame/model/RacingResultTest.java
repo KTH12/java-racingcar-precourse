@@ -16,13 +16,21 @@ class RacingResultTest extends NSTest {
 
     @Test
     void 자동차_이름_이동거리_출력() {
+        //given
         Car car = new Car(carName);
-        car.movingFront(MOVING_FORWARD);
 
+        // when
+        car.movingFront(MOVING_FORWARD);
+        printRepost(car);
+
+        // then
+        verify(carName + " : -");
+    }
+
+    private void printRepost(Car car) {
         RacingResult racingResult = new RacingResult(car);
         UserOutput.print(racingResult.report());
         System.out.println("완료");
-        verify(carName + " : -");
     }
 
     @Override protected void runMain() {

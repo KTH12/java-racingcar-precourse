@@ -10,14 +10,20 @@ class InvalidParamExceptionTest {
     @Test
     void InvalidParamException_CAR_NAME_SIZE_OVER_테스트() {
         assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
+            // when
             throw new InvalidParamException(ErrorCode.CAR_NAME_SIZE_OVER);
-        }).withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
+
+        })  // then
+            .withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
     }
 
     @Test
     void InvalidParamException_테스트() {
         assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
+            // when
             throw new InvalidParamException();
-        }).withMessage(ErrorCode.COMMON_INVALID_PARAMETER.getErrorMsg());
+
+        })  // then
+            .withMessage(ErrorCode.COMMON_INVALID_PARAMETER.getErrorMsg());
     }
 }

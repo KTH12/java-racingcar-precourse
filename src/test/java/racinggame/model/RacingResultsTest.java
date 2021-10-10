@@ -12,6 +12,8 @@ import java.util.List;
 class RacingResultsTest extends NSTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
+    private static final String CAR_NAME_A = "pobi";
+    private static final String CAR_NAME_B = "woni";
 
     @BeforeEach
     void beforeEach() {
@@ -19,47 +21,67 @@ class RacingResultsTest extends NSTest {
     }
 
     @Test
-    void 동시_우승자_출력() {
+    void 전진_전진_동시_우승자_출력() {
         assertRandomTest(() -> {
-            Cars cars = createCars();
+            // given
+            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
+            run(carNames);
 
-            racingResultTest(cars);
-            verify("pobi : -", "woni : -", "최종 우승자는 pobi,woni 입니다.");
+            // when
+            Cars cars = createCars();
+            racingResultPrintTest(cars);
+
+            // then
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : -", "최종 우승자는 " + carNames + " 입니다.");
         }, MOVING_FORWARD, MOVING_FORWARD);
     }
 
     @Test
-    void 우승자_출력() {
+    void 전진_정지_단일_우승자_출력() {
         assertRandomTest(() -> {
-            Cars cars = createCars();
+            // given
+            run(getCarNames(CAR_NAME_A, CAR_NAME_B));
 
-            racingResultTest(cars);
-            verify("pobi : -", "woni : ", "최종 우승자는 pobi 입니다.");
+            // when
+            Cars cars = createCars();
+            racingResultPrintTest(cars);
+
+            // then
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ", "최종 우승자는 " + CAR_NAME_A + " 입니다.");
         }, MOVING_FORWARD, STOP);
     }
 
     @Test
     void 레이싱_전진_출력() {
         assertRandomTest(() -> {
-            Cars cars = createCars();
+            // given
+            run(getCarNames(CAR_NAME_A, CAR_NAME_B));
 
-            racingResultTest(cars);
+            // when
+            Cars cars = createCars();
+            racingResultPrintTest(cars);
             System.out.println("완료");
-            verify("pobi : -", "woni : ");
+
+            // then
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ");
         }, MOVING_FORWARD, STOP);
     }
 
     private Cars createCars() {
-        run("pobi,woni");
         String input = Console.readLine();
         List<String> carNames = Arrays.asList(input.split(","));
 
         return new Cars(carNames);
     }
 
-    private void racingResultTest(Cars cars) {
+    private String getCarNames(String... arg) {
+        return String.join(",", arg);
+    }
+
+    private void racingResultPrintTest(Cars cars) {
         RacingResults racingResults = cars.racing();
         List<String> results = racingResults.reports();
+
         UserOutput.listLoopPrint(results);
         UserOutput.printWinner(racingResults.winnerReport());
     }

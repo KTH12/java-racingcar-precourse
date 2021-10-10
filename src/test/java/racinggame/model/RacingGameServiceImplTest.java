@@ -10,41 +10,77 @@ class RacingGameServiceImplTest extends NSTest {
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
 
-    RacingGameService racingGameService = new RacingGameServiceImpl();
+    private static final String CAR_NAME_A = "pobi";
+    private static final String CAR_NAME_B = "woni";
+    private static final String TRY_COUNT = "1";
+
+    RacingGameService racingGameService;
 
     @BeforeEach
     void beforeEach() {
         setUp();
+        racingGameService = new RacingGameServiceImpl();
     }
 
     @Test
     void 게임_종료() {
         assertRandomTest(() -> {
-            run("pobi,woni", "1");
-            assertThat(racingGameService.end()).isEqualTo(true);
+            // given
+            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
+            run(carNames, TRY_COUNT);
+
+            // when
+            gameRun();
+            boolean isEnd = racingGameService.end();
+
+            // then
+            assertThat(isEnd).isEqualTo(true);
         }, MOVING_FORWARD, MOVING_FORWARD);
     }
 
     @Test
     void 다중_우승자() {
         assertRandomTest(() -> {
-            run("pobi,woni", "1");
-            verify("pobi : -", "woni : ", "최종 우승자는 pobi,woni 입니다.");
+            // given
+            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
+            run(carNames, TRY_COUNT);
+
+            // when
+            // MOVING_FORWARD, MOVING_FORWARD (전진, 전진)
+            gameRun();
+
+            // when
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : -", "최종 우승자는 " + carNames + " 입니다.");
         }, MOVING_FORWARD, MOVING_FORWARD);
     }
 
     @Test
     void 최종_우승자() {
         assertRandomTest(() -> {
-            run("pobi,woni", "1");
-            verify("pobi : -", "woni : ", "최종 우승자는 pobi 입니다.");
+            // given
+            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
+            run(carNames, TRY_COUNT);
+
+            // when
+            // MOVING_FORWARD, STOP (전진, 정지)
+            gameRun();
+
+            // then
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ", "최종 우승자는 " + CAR_NAME_A + " 입니다.");
         }, MOVING_FORWARD, STOP);
     }
 
-    @Override protected void runMain() {
+    private String getCarNames(String... arg) {
+        return String.join(",", arg);
+    }
+
+    private void gameRun() {
         racingGameService.init();
         do {
             racingGameService.racing();
         } while (!racingGameService.end());
+    }
+
+    @Override protected void runMain() {
     }
 }
