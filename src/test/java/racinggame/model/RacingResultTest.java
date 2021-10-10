@@ -30,7 +30,6 @@ class RacingResultTest extends NSTest {
     private void printRepost(Car car) {
         RacingResult racingResult = new RacingResult(car);
         UserOutput.print(racingResult.report());
-        System.out.println("완료");
     }
 
     @Override protected void runMain() {

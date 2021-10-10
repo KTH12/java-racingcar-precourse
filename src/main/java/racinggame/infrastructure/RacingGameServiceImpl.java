@@ -19,12 +19,15 @@ public class RacingGameServiceImpl implements RacingGameService {
     @Override public void init() {
         cars = createCarsProcess();
         tryCount = tryCountProcess();
+
         UserOutput.print(CommonMessage.RESULT_MESSAGE.getMessage());
     }
 
     @Override public void racing() {
         racingResults = cars.racing();
+
         UserOutput.listLoopPrint(racingResults.reports());
+
         tryCount.incrementTryCount();
     }
 
@@ -51,14 +54,18 @@ public class RacingGameServiceImpl implements RacingGameService {
 
     private List<String> carNamesProcess() {
         try {
-            UserOutput.print(CommonMessage.REQUIRE_CAR_NAMES.getMessage());
-            List<String> carNames = UserInput.readUserMessageToArray();
+            List<String> carNames = gerCarNamesOfUser();
             UserOutput.print(String.join(CommonMessage.COMMA_SEPARATE.getMessage(), carNames));
             return carNames;
         } catch (InvalidParamException e) {
             UserOutput.print(e.getMessage());
             return carNamesProcess();
         }
+    }
+
+    private List<String> gerCarNamesOfUser() {
+        UserOutput.print(CommonMessage.REQUIRE_CAR_NAMES.getMessage());
+        return UserInput.readUserMessageToArray();
     }
 
     private TryCount tryCountProcess() {

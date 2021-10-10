@@ -22,8 +22,7 @@ public class Cars {
 
     public RacingResults racing() {
         RacingResults racingResults = new RacingResults();
-        for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
+        for (Car car : cars) {
             RacingResult racingResult = play(car);
             racingResults.add(racingResult);
         }

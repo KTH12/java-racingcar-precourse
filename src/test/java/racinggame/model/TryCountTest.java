@@ -70,7 +70,7 @@ class TryCountTest extends NSTest {
             UserInput.readTryCount();
 
             // then
-            verify(CommonMessage.REQUIRE_TRY_COUNT.getMessage(), "1");
+            verify(CommonMessage.REQUIRE_TRY_COUNT.getMessage(), input);
         });
     }
 

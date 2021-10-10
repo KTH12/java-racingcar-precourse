@@ -16,34 +16,36 @@ public class RacingResults {
 
     public List<String> reports() {
         List<String> results = new ArrayList<>();
-        for (int i = 0; i < racingResults.size(); i++) {
-            RacingResult racingResult = racingResults.get(i);
+        for (RacingResult racingResult : racingResults) {
             results.add(racingResult.report());
-
         }
 
         return results;
     }
 
     public String winnerReport() {
-        for (int i = 0; i < racingResults.size(); i++) {
-            mapLognestDistance(racingResults.get(i));
+        for (RacingResult racingResult : racingResults) {
+            mapLongestDistance(racingResult);
         }
 
         return String.join(CommonMessage.COMMA_SEPARATE.getMessage(), winners);
     }
 
-    private void mapLognestDistance(RacingResult racingResult) {
+    private void mapLongestDistance(RacingResult racingResult) {
         int distance = racingResult.getCarDistance();
         if (distance < longestDistance) {
             return;
         }
 
         if (distance > longestDistance) {
-            resetWinners();
-            longestDistance = distance;
+            newWinnerSetting(distance);
         }
         winners.add(racingResult.getCarName());
+    }
+
+    private void newWinnerSetting(int distance) {
+        resetWinners();
+        longestDistance = distance;
     }
 
     private void resetWinners() {
