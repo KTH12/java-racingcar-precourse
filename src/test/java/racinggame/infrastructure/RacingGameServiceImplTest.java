@@ -1,8 +1,9 @@
-package racinggame.model;
+package racinggame.infrastructure;
 
 import nextstep.test.NSTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import racinggame.model.RacingGameService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

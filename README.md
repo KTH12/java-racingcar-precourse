@@ -124,6 +124,10 @@
 
 - [X] ApplicationTest 기본 테스트 모두 통과
 
+- [X] model 패키지에서 View(UserInput, UserOutput) 패키지 접근하지 않기(릭팩토링)
+    - model 패키지에서 View 에 접근하는 로직이 있으면 복잡성을 높일 수 있으므로 분리
+    - RacingGameServiceImpl.java 를 infrastructure 패키지로 이동
+
 --- 
 
 ### 테스트 코드 리팩토링
@@ -134,7 +138,7 @@
 > 3. 테스트 당 개념 하나
 > 4. 빠르게 / 독립적으로 / 반복가능하게 / 자가검증하는 / 적시에
 > 5. 테스트 비교 값은 Boolean 또는 명확성을 뛸수 있도록 노력하기
-> 5. given-when-then
+> 6. given-when-then
 >
 
 - [ ] 테스트 코드 리팩토링

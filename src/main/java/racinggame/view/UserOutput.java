@@ -14,6 +14,7 @@ public class UserOutput {
         for (String output : listOutput) {
             print(output);
         }
+        print("");
     }
 
     public static void printTtyCount() {

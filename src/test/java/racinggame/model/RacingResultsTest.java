@@ -60,7 +60,6 @@ class RacingResultsTest extends NSTest {
             // when
             Cars cars = createCars();
             racingResultPrintTest(cars);
-            System.out.println("완료");
 
             // then
             verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ");

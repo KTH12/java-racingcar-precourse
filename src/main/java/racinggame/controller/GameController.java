@@ -1,7 +1,7 @@
 package racinggame.controller;
 
+import racinggame.infrastructure.RacingGameServiceImpl;
 import racinggame.model.RacingGameService;
-import racinggame.model.RacingGameServiceImpl;
 
 public class GameController {
     RacingGameService racingGameService = new RacingGameServiceImpl();

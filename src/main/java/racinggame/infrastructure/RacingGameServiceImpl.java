@@ -1,7 +1,11 @@
-package racinggame.model;
+package racinggame.infrastructure;
 
 import racinggame.common.exception.InvalidParamException;
 import racinggame.common.response.CommonMessage;
+import racinggame.model.Cars;
+import racinggame.model.RacingGameService;
+import racinggame.model.RacingResults;
+import racinggame.model.TryCount;
 import racinggame.view.UserInput;
 import racinggame.view.UserOutput;
 
@@ -15,7 +19,6 @@ public class RacingGameServiceImpl implements RacingGameService {
     @Override public void init() {
         cars = createCarsProcess();
         tryCount = tryCountProcess();
-        UserOutput.print("");
         UserOutput.print(CommonMessage.RESULT_MESSAGE.getMessage());
     }
 
@@ -23,7 +26,6 @@ public class RacingGameServiceImpl implements RacingGameService {
         racingResults = cars.racing();
         UserOutput.listLoopPrint(racingResults.reports());
         tryCount.incrementTryCount();
-        UserOutput.print("");
     }
 
     @Override public boolean end() {
