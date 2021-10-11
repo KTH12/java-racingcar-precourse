@@ -1,8 +1,8 @@
 package racinggame.model;
 
+import racinggame.common.response.CommonMessage;
+
 public class Car {
-    private static final String RACING_DISTANCE_BAR = "-";
-    private static final String RACING_PROGRESS_FORMAT = "%s : %s";
     private final CarName carName;
     private final Engine engine;
     private int distance = 0;
@@ -31,13 +31,13 @@ public class Car {
     }
 
     public String getProgress() {
-        return String.format(RACING_PROGRESS_FORMAT, getCarName(), getDistanceProgressBar());
+        return String.format(CommonMessage.RACING_PROGRESS_FORMAT.getMessage(), getCarName(), getDistanceProgressBar());
     }
 
     private String getDistanceProgressBar() {
         StringBuilder distanceProgressBar = new StringBuilder();
         for (int i = 0; i < distance; i++) {
-            distanceProgressBar.append(RACING_DISTANCE_BAR);
+            distanceProgressBar.append(CommonMessage.RACING_DISTANCE_BAR.getMessage());
         }
         return distanceProgressBar.toString();
     }

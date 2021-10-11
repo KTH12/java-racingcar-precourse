@@ -20,12 +20,12 @@ public class CarName {
         if (name.isEmpty()) {
             throw new InvalidParamException(ErrorCode.EMPTY_ERROR);
         }
-        if (isLengthOrver(name)) {
+        if (isLengthOver(name)) {
             throw new InvalidParamException(ErrorCode.CAR_NAME_SIZE_OVER);
         }
     }
 
-    private boolean isLengthOrver(String name) {
+    private boolean isLengthOver(String name) {
         return name.length() > MAX_NAME_LENGTH;
     }
 }

@@ -54,8 +54,13 @@ class RacingViewFactoryTest extends NSTest {
     @Test
     void 사용자_시도_회수_생성_실패_성공() {
         assertSimpleTest(() -> {
+            // given
             run("a", "1");
+
+            // when
             racingViewFactory.createTryCountToUser();
+
+            // then
             verify(ERROR_MESSAGE);
         });
     }

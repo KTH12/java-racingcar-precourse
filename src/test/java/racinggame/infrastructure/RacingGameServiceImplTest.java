@@ -3,6 +3,7 @@ package racinggame.infrastructure;
 import nextstep.test.NSTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import racinggame.common.response.CommonMessage;
 import racinggame.model.Cars;
 import racinggame.model.RacingGameService;
 import racinggame.model.RacingReport;
@@ -26,6 +27,20 @@ class RacingGameServiceImplTest extends NSTest {
     void beforeEach() {
         setUp();
         racingGameService = new RacingGameServiceImpl();
+    }
+
+    @Test
+    void 우승자_없음() {
+        assertRandomTest(() -> {
+            // given
+            List<String> carNames = Arrays.asList(CAR_NAME_A, CAR_NAME_B);
+
+            // when
+            gameRun(carNames, 1);
+
+            // when
+            verify(CommonMessage.NOTHING_WINNER.getMessage());
+        }, STOP, STOP);
     }
 
     @Test
@@ -64,7 +79,7 @@ class RacingGameServiceImplTest extends NSTest {
 
         // 최종 승자 출력진행
         RacingReport racingReport = racingGameService.end();
-        UserOutput.printWinner(racingReport.getWinCarNames());
+        racingWinnerPrint(racingReport.getWinCarNames());
     }
 
     private void racePlay(int tryCount) {
@@ -75,6 +90,14 @@ class RacingGameServiceImplTest extends NSTest {
             UserOutput.listLoopPrint(roundReport);
             tryCount--;
         }
+    }
+
+    private void racingWinnerPrint(String winnerCarNames) {
+        if (winnerCarNames.isEmpty()) {
+            UserOutput.print(CommonMessage.NOTHING_WINNER.getMessage());
+            return;
+        }
+        UserOutput.printWinner(winnerCarNames);
     }
 
     private boolean isEnd(int tryCount) {
