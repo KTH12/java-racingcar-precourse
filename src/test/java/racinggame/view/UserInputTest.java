@@ -4,13 +4,10 @@ import nextstep.test.NSTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import racinggame.common.exception.InvalidParamException;
-import racinggame.common.response.ErrorCode;
-import racinggame.model.Cars;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserInputTest extends NSTest {
     @BeforeEach
@@ -19,33 +16,30 @@ public class UserInputTest extends NSTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"OrverAcar,Bcar,Ccar"})
-    void 콤마_입력_자동차_생성_6자_실패(String input) {
-        assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
-            // given
-            run(input);
+    @ValueSource(strings = {"Acar,Bcar,Ccar"})
+    void 유저_콤마_입력_배열_체크(String input) {
+        // given
+        run(input);
 
-            // then
-            List<String> carNames = UserInput.readUserMessageToArray();
-            new Cars(carNames);
+        // then
+        List<String> carNames = UserInput.readUserMessageToArray();
 
-        })  // then
-            .withMessage(ErrorCode.CAR_NAME_SIZE_OVER.getErrorMsg());
-
+        // then
+        assertThat(carNames)
+            .containsExactly("Acar", "Bcar", "Ccar");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Acar,Bcar,Ccar"})
-    void 콤마_입력_자동차_생성(String input) {
+    @ValueSource(strings = {"hi"})
+    void 유저_입력(String input) {
         // given
         run(input);
 
         // when
-        List<String> carNames = UserInput.readUserMessageToArray();
-        new Cars(carNames);
+        String readValue = UserInput.readUserMessage();
 
         // then
-        // 정상 종료 성공
+        assertThat(readValue).isEqualTo(input);
     }
 
     @Override protected void runMain() {
