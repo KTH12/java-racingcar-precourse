@@ -17,8 +17,15 @@ public class CarName {
     }
 
     private void valid(String name) {
-        if (name.length() > MAX_NAME_LENGTH) {
+        if (name.isEmpty()) {
+            throw new InvalidParamException(ErrorCode.EMPTY_ERROR);
+        }
+        if (isLengthOrver(name)) {
             throw new InvalidParamException(ErrorCode.CAR_NAME_SIZE_OVER);
         }
+    }
+
+    private boolean isLengthOrver(String name) {
+        return name.length() > MAX_NAME_LENGTH;
     }
 }

@@ -14,6 +14,7 @@ public class CarTest {
 
     private static final String successCarName = "Car";
     private static final String failCarName = "OverCar";
+    private static final String emptyCarName = "";
     private Car successCar;
 
     protected void setUp() {
@@ -23,6 +24,15 @@ public class CarTest {
     @BeforeEach
     void beforeEach() {
         setUp();
+    }
+
+    @Test
+    void 자동차_이름_빈값_에러() {
+        assertThatExceptionOfType(InvalidParamException.class).isThrownBy(() -> {
+            // when
+            new Car(emptyCarName);
+        })  // then
+            .withMessage(ErrorCode.EMPTY_ERROR.getErrorMsg());
     }
 
     @Test
