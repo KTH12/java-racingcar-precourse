@@ -25,6 +25,10 @@ public class TryCount {
         return tryCount;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     private void valid(String input) {
         if (!input.matches(ONLY_NUMBER_REG_EXP)) {
             throw new InvalidParamException(ErrorCode.ONLY_NUMBER);

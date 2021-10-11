@@ -10,28 +10,31 @@ public class Cars {
         mapCars(carNames);
     }
 
+    public List<String> racing() {
+        List<String> roundProgressReports = new ArrayList<>();
+        for (Car car : cars) {
+            play(car);
+            roundProgressReports.add(car.getProgress());
+        }
+
+        return roundProgressReports;
+    }
+
+    public RacingReport report() {
+        return new RacingReport(cars);
+    }
+
     public List<Car> getCars() {
         return cars;
+    }
+
+    private void play(Car car) {
+        car.movingFront(RandomNumber.generator());
     }
 
     private void mapCars(List<String> carNames) {
         for (String name : carNames) {
             cars.add(new Car(name));
         }
-    }
-
-    public RacingResults racing() {
-        RacingResults racingResults = new RacingResults();
-        for (Car car : cars) {
-            RacingResult racingResult = play(car);
-            racingResults.add(racingResult);
-        }
-
-        return racingResults;
-    }
-
-    private RacingResult play(Car car) {
-        car.movingFront(RandomNumber.generator());
-        return new RacingResult(car);
     }
 }

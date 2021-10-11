@@ -1,9 +1,11 @@
 package racinggame.model;
 
+import java.util.List;
+
 public interface RacingGameService {
-    void init();
+    void init(Cars cars);
 
-    void racing();
+    List<String> racing();
 
-    boolean end();
+    RacingReport end();
 }

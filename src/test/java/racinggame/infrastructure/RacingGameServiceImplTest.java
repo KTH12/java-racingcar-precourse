@@ -3,17 +3,22 @@ package racinggame.infrastructure;
 import nextstep.test.NSTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import racinggame.model.Cars;
 import racinggame.model.RacingGameService;
+import racinggame.model.RacingReport;
+import racinggame.view.UserOutput;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Arrays;
+import java.util.List;
 
 class RacingGameServiceImplTest extends NSTest {
+    private static final String MULTI_WINNERS_FORMAT = "최종 우승자는 %s,%s 입니다.";
+    private static final String WINNER_FORMAT = "최종 우승자는 %s 입니다.";
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
 
     private static final String CAR_NAME_A = "pobi";
     private static final String CAR_NAME_B = "woni";
-    private static final String TRY_COUNT = "1";
 
     RacingGameService racingGameService;
 
@@ -24,34 +29,17 @@ class RacingGameServiceImplTest extends NSTest {
     }
 
     @Test
-    void 게임_종료() {
-        assertRandomTest(() -> {
-            // given
-            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
-            run(carNames, TRY_COUNT);
-
-            // when
-            gameRun();
-            boolean isEnd = racingGameService.end();
-
-            // then
-            assertThat(isEnd).isEqualTo(true);
-        }, MOVING_FORWARD, MOVING_FORWARD);
-    }
-
-    @Test
     void 다중_우승자() {
         assertRandomTest(() -> {
             // given
-            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
-            run(carNames, TRY_COUNT);
+            List<String> carNames = Arrays.asList(CAR_NAME_A, CAR_NAME_B);
 
             // when
-            // MOVING_FORWARD, MOVING_FORWARD (전진, 전진)
-            gameRun();
+            gameRun(carNames, 1);
 
             // when
-            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : -", "최종 우승자는 " + carNames + " 입니다.");
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : -",
+                String.format(MULTI_WINNERS_FORMAT, CAR_NAME_A, CAR_NAME_B));
         }, MOVING_FORWARD, MOVING_FORWARD);
     }
 
@@ -59,27 +47,38 @@ class RacingGameServiceImplTest extends NSTest {
     void 최종_우승자() {
         assertRandomTest(() -> {
             // given
-            String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
-            run(carNames, TRY_COUNT);
+            List<String> carNames = Arrays.asList(CAR_NAME_A, CAR_NAME_B);
 
             // when
-            // MOVING_FORWARD, STOP (전진, 정지)
-            gameRun();
+            gameRun(carNames, 1);
 
             // then
-            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ", "최종 우승자는 " + CAR_NAME_A + " 입니다.");
+            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ", String.format(WINNER_FORMAT, CAR_NAME_A));
         }, MOVING_FORWARD, STOP);
     }
 
-    private String getCarNames(String... arg) {
-        return String.join(",", arg);
+    private void gameRun(List<String> carNames, int tryCount) {
+        // Cars 세팅
+        racingGameService.init(new Cars(carNames));
+        racePlay(tryCount);
+
+        // 최종 승자 출력진행
+        RacingReport racingReport = racingGameService.end();
+        UserOutput.printWinner(racingReport.getWinCarNames());
     }
 
-    private void gameRun() {
-        racingGameService.init();
-        do {
-            racingGameService.racing();
-        } while (!racingGameService.end());
+    private void racePlay(int tryCount) {
+        while (isEnd(tryCount)) {
+            // 레이싱 진행
+            List<String> roundReport = racingGameService.racing();
+            // 레이싱 자동차 이름 + 전진 거리 출력
+            UserOutput.listLoopPrint(roundReport);
+            tryCount--;
+        }
+    }
+
+    private boolean isEnd(int tryCount) {
+        return tryCount > 0;
     }
 
     @Override protected void runMain() {

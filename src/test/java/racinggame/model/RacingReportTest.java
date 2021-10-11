@@ -9,7 +9,8 @@ import racinggame.view.UserOutput;
 import java.util.Arrays;
 import java.util.List;
 
-class RacingResultsTest extends NSTest {
+class RacingReportTest extends NSTest {
+    private static final String WINNER_FORMAT = "최종 우승자는 %s 입니다.";
     private static final int MOVING_FORWARD = 4;
     private static final int STOP = 3;
     private static final String CAR_NAME_A = "pobi";
@@ -27,12 +28,12 @@ class RacingResultsTest extends NSTest {
             String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
             run(carNames);
 
-            // when
+            // when`
             Cars cars = createCars();
-            racingResultPrintTest(cars);
+            racingResultPrint(cars);
 
             // then
-            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : -", "최종 우승자는 " + carNames + " 입니다.");
+            verify(String.format(WINNER_FORMAT, carNames));
         }, MOVING_FORWARD, MOVING_FORWARD);
     }
 
@@ -44,25 +45,10 @@ class RacingResultsTest extends NSTest {
 
             // when
             Cars cars = createCars();
-            racingResultPrintTest(cars);
+            racingResultPrint(cars);
 
             // then
-            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ", "최종 우승자는 " + CAR_NAME_A + " 입니다.");
-        }, MOVING_FORWARD, STOP);
-    }
-
-    @Test
-    void 레이싱_전진_출력() {
-        assertRandomTest(() -> {
-            // given
-            run(getCarNames(CAR_NAME_A, CAR_NAME_B));
-
-            // when
-            Cars cars = createCars();
-            racingResultPrintTest(cars);
-
-            // then
-            verify(CAR_NAME_A + " : -", CAR_NAME_B + " : ");
+            verify(String.format(WINNER_FORMAT, CAR_NAME_A));
         }, MOVING_FORWARD, STOP);
     }
 
@@ -77,12 +63,11 @@ class RacingResultsTest extends NSTest {
         return String.join(",", arg);
     }
 
-    private void racingResultPrintTest(Cars cars) {
-        RacingResults racingResults = cars.racing();
-        List<String> results = racingResults.reports();
+    private void racingResultPrint(Cars cars) {
+        List<String> report = cars.racing();
 
-        UserOutput.listLoopPrint(results);
-        UserOutput.printWinner(racingResults.winnerReport());
+        UserOutput.listLoopPrint(report);
+        UserOutput.printWinner(cars.report().getWinCarNames());
     }
 
     @Override protected void runMain() {
