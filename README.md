@@ -140,7 +140,7 @@
 >
 
 - [X] 테스트 코드 리팩토링
-    - [X] 가동성 높이기 위해 함수 분리
+    - [X] 가독성 높이기 위해 함수 분리
     - [X] 중복 변수 상수로 리팩토링
     - [X] given-when-then 패턴 적용
 
@@ -160,7 +160,8 @@
     │   │       └── ErrorCode             # 에러 Enum
     │   │
     │   ├── controller                    
-    │   │   └── GameController            # 레이싱 게임 호출
+    │   │   ├── GameController            # 레이싱 게임 호출
+    │   │   └── RacingViewFactory         # 컨트롤 레이어에서 뷰 레이어 호출
     │   │
     │   ├── infrastructure                
     │   │   └── RacingGameServiceImpl     # RacingGameService 구현체
@@ -171,8 +172,7 @@
     │   │   ├── Cars                      # Car 리스트를 가짐
     │   │   ├── Engine                    # Car 출력(전진) 모델
     │   │   ├── RacingGameService         # 레이싱 게임 진행 인터페이스
-    │   │   ├── RacingResult              # 각각 자동차 결과 모델
-    │   │   ├── RacingResults             # 레이싱 전체 결과 모델
+    │   │   ├── RacingReport              # 레이싱 승자 판단 모델
     │   │   ├── RandomNumber              # 랜덤 숫자 생성 모델
     │   │   └── TryCount                  # 재시도 카운팅, 마지막 게임 여부 판단 모델
     │   │
