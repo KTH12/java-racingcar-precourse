@@ -59,16 +59,16 @@ class RacingReportTest extends NSTest {
         return new Cars(carNames);
     }
 
-    private String getCarNames(String... arg) {
-        return String.join(",", arg);
-    }
-
     private void racingResultPrint(Cars cars) {
         List<String> report = cars.racing();
         UserOutput.listLoopPrint(report);
 
-        RacingReportRefactor racingReportRefactor = new RacingReportRefactor(cars);
-        UserOutput.printWinner(racingReportRefactor.getWinCarNamesFormatComma());
+        RacingReport racingReport = new RacingReport(cars);
+        UserOutput.printWinner(racingReport.getWinCarNamesFormatComma());
+    }
+
+    private String getCarNames(String... arg) {
+        return String.join(",", arg);
     }
 
     @Override protected void runMain() {

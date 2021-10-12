@@ -128,6 +128,9 @@
     - model 패키지에서 View 에 접근하는 로직이 있으면 복잡성을 높일 수 있으므로 분리
     - RacingGameServiceImpl.java 를 infrastructure 패키지로 이동
 
+- [X] RacingReport 리팩토링
+    - [X] RacingReport 에서 승패를 판단하지 않고, 승패여부를 Car 모델 단위에서 검증 할 수 있도록 변경
+
 ## 테스트 코드 리팩토링
 
 > 목표 : 깨끗한 테스트 코드 만들기

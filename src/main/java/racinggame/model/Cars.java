@@ -21,7 +21,7 @@ public class Cars {
     }
 
     public RacingReport report() {
-        return new RacingReport(cars);
+        return new RacingReport(this);
     }
 
     public List<Car> getCars() {

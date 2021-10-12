@@ -1,63 +1,62 @@
 package racinggame.model;
 
+import racinggame.common.response.CarStatus;
 import racinggame.common.response.CommonMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RacingReport {
-    private final List<Car> cars;
-    private List<String> winCarNames = new ArrayList<>();
-    private int longestDistance = 0;
+    private final Cars cars;
+    private List<Car> winCars = new ArrayList<>();
 
-    public RacingReport(List<Car> cars) {
+    public RacingReport(Cars cars) {
         this.cars = cars;
     }
 
-    public String getWinCarNames() {
-        for (Car car : cars) {
-            winnerCheck(car);
+    public String getWinCarNamesFormatComma() {
+        for (Car car : cars.getCars()) {
+            winnerValidProcess(car);
         }
 
-        return String.join(CommonMessage.COMMA_SEPARATE.getMessage(), winCarNames);
+        return getWinCarNames();
     }
 
-    private void winnerCheck(Car car) {
-        if (isWin(car)) {
-            winCarNames.add(car.getCarName());
+    private void winnerValidProcess(Car car) {
+        if (car.isDistanceZero()) {
+            return;
+        }
+
+        if (isAddWinner(car)) {
+            winCars.add(car);
         }
     }
 
-    private boolean isWin(Car car) {
-        int distance = car.getDistance();
-        if (isNewOrTieRecord(distance)) {
-            resetWin(distance);
+    private String getWinCarNames() {
+        List<String> result = new ArrayList<>();
+        for (Car car : winCars) {
+            result.add(car.getCarName());
+        }
+        return String.join(CommonMessage.COMMA_SEPARATE.getMessage(), result);
+    }
+
+    private boolean isAddWinner(Car car) {
+        if (winCars.isEmpty()) {
             return true;
         }
 
-        return false;
-    }
-
-    private void resetWin(int distance) {
-        if (isNewRecord(distance)) {
-            winCarNames = new ArrayList<>();
-            longestDistance = distance;
-        }
-    }
-
-    private boolean isNewOrTieRecord(int distance) {
-        if (isZero(distance)) {
+        CarStatus racingStatus = car.compareTo(getWinCarFirst());
+        if (CarStatus.isDefeat(racingStatus)) {
             return false;
         }
-        return distance >= longestDistance;
+
+        if (CarStatus.isNewRecord(racingStatus)) {
+            winCars = new ArrayList<>();
+        }
+        return true;
     }
 
-    private boolean isZero(int distance) {
-        return distance == 0;
+    private Car getWinCarFirst() {
+        return winCars.get(0);
     }
-
-    private boolean isNewRecord(int distance) {
-        return distance > longestDistance;
-    }
-
 }

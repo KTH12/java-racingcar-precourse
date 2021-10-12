@@ -79,7 +79,7 @@ class RacingGameServiceImplTest extends NSTest {
 
         // 최종 승자 출력진행
         RacingReport racingReport = racingGameService.end();
-        racingWinnerPrint(racingReport.getWinCarNames());
+        racingWinnerPrint(racingReport.getWinCarNamesFormatComma());
     }
 
     private void racePlay(int tryCount) {

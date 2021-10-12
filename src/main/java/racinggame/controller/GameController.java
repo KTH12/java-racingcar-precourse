@@ -48,7 +48,7 @@ public class GameController {
     private void racingWinnerPrint() {
         RacingReport racingReport = racingGameService.end();
 
-        String winnerCarNames = racingReport.getWinCarNames();
+        String winnerCarNames = racingReport.getWinCarNamesFormatComma();
         if (winnerCarNames.isEmpty()) {
             UserOutput.print(CommonMessage.NOTHING_WINNER.getMessage());
             return;
