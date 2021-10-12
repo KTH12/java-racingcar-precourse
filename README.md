@@ -160,6 +160,7 @@
     │   │   │
     │   │   └── response
     │   │       ├── CommonMessage         # 공통 Enum 메시지
+    │   │       ├── CarStatus             # 레이싱 결과 상태코드 Enum
     │   │       └── ErrorCode             # 에러 Enum
     │   │
     │   ├── controller                    
