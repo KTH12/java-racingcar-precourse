@@ -28,7 +28,7 @@ class RacingReportTest extends NSTest {
             String carNames = getCarNames(CAR_NAME_A, CAR_NAME_B);
             run(carNames);
 
-            // when`
+            // when
             Cars cars = createCars();
             racingResultPrint(cars);
 
@@ -65,9 +65,10 @@ class RacingReportTest extends NSTest {
 
     private void racingResultPrint(Cars cars) {
         List<String> report = cars.racing();
-
         UserOutput.listLoopPrint(report);
-        UserOutput.printWinner(cars.report().getWinCarNames());
+
+        RacingReportRefactor racingReportRefactor = new RacingReportRefactor(cars);
+        UserOutput.printWinner(racingReportRefactor.getWinCarNamesFormatComma());
     }
 
     @Override protected void runMain() {
